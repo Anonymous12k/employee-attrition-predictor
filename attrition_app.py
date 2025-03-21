@@ -53,4 +53,4 @@ if submitted:
     st.write("---")
     st.write("✅ *Model trained and deployed with Python, Scikit-learn, and Streamlit.*")
 
-st.sidebar.write("Developed by: Your Name")
+st.sidebar.write("Developed by: L KISHORE")

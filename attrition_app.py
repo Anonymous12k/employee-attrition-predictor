@@ -3,7 +3,6 @@ import pandas as pd
 import joblib
 import matplotlib.pyplot as plt
 import seaborn as sns
-import base64
 
 # Load the trained model and scaler
 model = joblib.load("attrition_model.pkl")
@@ -18,7 +17,7 @@ st.set_page_config(page_title="Employee Attrition Predictor & Visuals", page_ico
 def add_banner():
     st.markdown("""
         <div style="background-color:#2c3e50;padding:15px;border-radius:10px;margin-bottom:20px;">
-        <h1 style="color:white;text-align:center;">🏢 SIMATS Engineering - Employee Attrition Predictor Dashboard</h1>
+        <h1 style="color:white;text-align:center;">🏢 STRAK Indus - Employee Attrition Predictor Dashboard</h1>
         </div>
         """, unsafe_allow_html=True)
 
@@ -84,10 +83,11 @@ ax2.set_ylabel("Monthly Income")
 ax2.set_xlabel("Job Role")
 st.pyplot(fig2)
 
-# Correlation heatmap
+# Correlation heatmap using only numeric columns
 st.subheader("📊 Feature Correlation Heatmap")
+numeric_data = data.select_dtypes(include=['int64', 'float64'])
 fig3, ax3 = plt.subplots(figsize=(12, 8))
-sns.heatmap(data.corr(), annot=False, cmap="coolwarm", ax=ax3)
+sns.heatmap(numeric_data.corr(), annot=False, cmap="coolwarm", ax=ax3)
 ax3.set_title("Correlation Between Features")
 st.pyplot(fig3)
 

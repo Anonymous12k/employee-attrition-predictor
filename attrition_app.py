@@ -17,7 +17,7 @@ st.set_page_config(page_title="Employee Attrition Predictor & Visuals", page_ico
 def add_banner():
     st.markdown("""
         <div style="background-color:#2c3e50;padding:15px;border-radius:10px;margin-bottom:20px;">
-        <h1 style="color:white;text-align:center;">🏢 STRAK Indus - Employee Attrition Predictor Dashboard</h1>
+        <h1 style="color:white;text-align:center;">🏢 STRAK Industries - Employee Attrition Predictor Dashboard</h1>
         </div>
         """, unsafe_allow_html=True)
 
@@ -45,8 +45,11 @@ if st.sidebar.button("🚀 Predict Attrition"):
         'MonthlyIncome': [monthly_income]
     })
 
-    prediction = model.predict(input_data)[0]
-    probability = model.predict_proba(input_data)[0][1] * 100
+    # Scale input data to match training conditions
+    scaled_input = scaler.transform(input_data)
+
+    prediction = model.predict(scaled_input)[0]
+    probability = model.predict_proba(scaled_input)[0][1] * 100
 
     st.markdown("## 📊 Prediction Output")
 
@@ -91,4 +94,11 @@ sns.heatmap(numeric_data.corr(), annot=False, cmap="coolwarm", ax=ax3)
 ax3.set_title("Correlation Between Features")
 st.pyplot(fig3)
 
-st.sidebar.write("Developed by: L KISHORE | SIMATS Engineering")
+# Add logo in sidebar footer
+st.sidebar.markdown("""
+---
+<div style='text-align:center;'>
+    <img src='https://raw.githubusercontent.com/Anonymous12k/employee-attrition-predictor/main/your_logo.png' width='120'/>
+    <p>Developed by: L KISHORE<br>SIMATS Engineering</p>
+</div>
+""", unsafe_allow_html=True)

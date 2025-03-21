@@ -45,6 +45,10 @@ if st.sidebar.button("🚀 Predict Attrition"):
         'MonthlyIncome': [monthly_income]
     })
 
+    # Ensure feature order matches training features
+    feature_order = scaler.feature_names_in_
+    input_data = input_data.reindex(columns=feature_order, fill_value=0)
+
     # Scale input data to match training conditions
     scaled_input = scaler.transform(input_data)
 

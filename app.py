@@ -17,13 +17,13 @@ st.set_page_config(page_title="Employee Attrition Predictor & Visuals", page_ico
 def add_banner():
     st.markdown("""
         <div style="background-color:#2c3e50;padding:15px;border-radius:10px;margin-bottom:20px;">
-        <h1 style="color:white;text-align:center;">🏢 STRAK Indus - Employee Attrition Predictor Dashboard</h1>
+        <h1 style="color:white;text-align:center;">🏢 STRAK Industries - Employee Attrition Predictor Dashboard</h1>
         </div>
         """, unsafe_allow_html=True)
 
 add_banner()
 
-st.write("Fill in the employee details below and predict the likelihood of attrition.")
+st.write("Fill in the employee details below to predict the likelihood of attrition.")
 
 # Sidebar Input fields with styled headers
 st.sidebar.header("🔎 Enter Employee Details:")
@@ -55,7 +55,6 @@ if st.sidebar.button("🚀 Predict Attrition"):
     else:
         st.success(f"✅ This employee is likely to stay. Probability of leaving: {probability:.2f}%")
 
-    # Visual insights on prediction
     st.info("**Key Factors influencing prediction:**")
     st.write("- Age: Younger employees may have higher turnover.")
     st.write("- Job Satisfaction: Low satisfaction increases risk.")
@@ -87,8 +86,9 @@ st.pyplot(fig2)
 st.subheader("📊 Feature Correlation Heatmap")
 numeric_data = data.select_dtypes(include=['int64', 'float64'])
 fig3, ax3 = plt.subplots(figsize=(12, 8))
-sns.heatmap(numeric_data.corr(), annot=False, cmap="coolwarm", ax=ax3)
+sns.heatmap(numeric_data.corr(), annot=True, cmap="coolwarm", ax=ax3, fmt=".2f")
 ax3.set_title("Correlation Between Features")
 st.pyplot(fig3)
 
-st.sidebar.write("Developed by: L KISHORE | SIMATS Engineering")
+st.sidebar.markdown("<hr>", unsafe_allow_html=True)
+st.sidebar.write("Developed by: L. Kishore | Saveetha School of Engineering")

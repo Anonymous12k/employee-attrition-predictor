@@ -33,6 +33,8 @@ years_at_company = st.sidebar.slider("Years at Company", 0, 40, 5)
 monthly_income = st.sidebar.number_input("Monthly Income", 1000, 100000, 5000)
 job_satisfaction = st.sidebar.radio("Job Satisfaction (1-5)", [1, 2, 3, 4, 5])
 distance_from_home = st.sidebar.slider("Distance from Home (km)", 1, 50, 10)
+education_field = st.sidebar.selectbox("Education Field", data['EducationField'].unique())
+job_role = st.sidebar.selectbox("Job Role", data['JobRole'].unique())
 
 if st.sidebar.button("🚀 Predict Attrition"):
     overtime_val = 1 if overtime == "Yes" else 0
@@ -42,11 +44,21 @@ if st.sidebar.button("🚀 Predict Attrition"):
         'YearsAtCompany': [years_at_company],
         'OverTime': [overtime_val],
         'DistanceFromHome': [distance_from_home],
-        'MonthlyIncome': [monthly_income]
+        'MonthlyIncome': [monthly_income],
+        'EducationField': [education_field],
+        'JobRole': [job_role]
     })
 
-    prediction = model.predict(input_data)[0]
-    probability = model.predict_proba(input_data)[0][1] * 100
+    # Perform one-hot encoding for new categorical columns
+    input_encoded = pd.get_dummies(input_data)
+    model_columns = joblib.load("model_columns.pkl")  # Contains columns model was trained on
+    for col in model_columns:
+        if col not in input_encoded.columns:
+            input_encoded[col] = 0
+    input_encoded = input_encoded[model_columns]
+
+    prediction = model.predict(input_encoded)[0]
+    probability = model.predict_proba(input_encoded)[0][1] * 100
 
     st.markdown("## 📊 Prediction Output")
 
@@ -60,6 +72,7 @@ if st.sidebar.button("🚀 Predict Attrition"):
     st.write("- Job Satisfaction: Low satisfaction increases risk.")
     st.write("- OverTime: Frequent overtime can increase attrition.")
     st.write("- Monthly Income: Lower income groups show higher attrition.")
+    st.write("- Job Role and Education Field: Certain roles and fields show higher tendencies.")
 
 st.write("---")
 
@@ -82,13 +95,22 @@ ax2.set_ylabel("Monthly Income")
 ax2.set_xlabel("Job Role")
 st.pyplot(fig2)
 
+# Countplot: Attrition by Education Field
+st.subheader("🎓 Attrition Count by Education Field")
+fig3, ax3 = plt.subplots(figsize=(10, 5))
+sns.countplot(x='EducationField', hue='Attrition', data=data, ax=ax3)
+ax3.set_xticklabels(ax3.get_xticklabels(), rotation=45, ha='right')
+ax3.set_ylabel("Count")
+ax3.set_xlabel("Education Field")
+st.pyplot(fig3)
+
 # Correlation heatmap using only numeric columns
 st.subheader("📊 Feature Correlation Heatmap")
 numeric_data = data.select_dtypes(include=['int64', 'float64'])
-fig3, ax3 = plt.subplots(figsize=(12, 8))
-sns.heatmap(numeric_data.corr(), annot=True, cmap="coolwarm", ax=ax3, fmt=".2f")
-ax3.set_title("Correlation Between Features")
-st.pyplot(fig3)
+fig4, ax4 = plt.subplots(figsize=(12, 8))
+sns.heatmap(numeric_data.corr(), annot=True, cmap="coolwarm", ax=ax4, fmt=".2f")
+ax4.set_title("Correlation Between Features")
+st.pyplot(fig4)
 
 st.sidebar.markdown("<hr>", unsafe_allow_html=True)
 st.sidebar.write("Developed by: L. Kishore | Saveetha School of Engineering")

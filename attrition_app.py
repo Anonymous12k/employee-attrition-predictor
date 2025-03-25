@@ -31,7 +31,7 @@ age = st.sidebar.slider("Age", 18, 60, 30)
 overtime = st.sidebar.radio("OverTime", ["Yes", "No"])
 years_at_company = st.sidebar.slider("Years at Company", 0, 40, 5)
 monthly_income = st.sidebar.number_input("Monthly Income", 1000, 50000, 5000)
-job_satisfaction = st.sidebar.slider("Job Satisfaction (1-5)", 1, 5, 3)
+job_satisfaction = st.sidebar.slider("Job Satisfaction (1-4)", 1, 4, 3)
 distance_from_home = st.sidebar.slider("Distance from Home (km)", 1, 50, 10)
 
 if st.sidebar.button("🚀 Predict Attrition"):

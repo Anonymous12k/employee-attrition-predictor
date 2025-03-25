@@ -24,12 +24,12 @@ add_banner()
 
 # Sidebar form inputs
 st.sidebar.header("🔎 Enter Employee Details:")
-age = st.sidebar.number_input("Age", min_value=18, max_value=60, step=1)
-job_satisfaction = st.sidebar.selectbox("Job Satisfaction Level", [1, 2, 3, 4, 5])
-years_at_company = st.sidebar.number_input("Years at Company", min_value=0, max_value=40, step=1)
-overtime = st.sidebar.selectbox("Overtime", ["Yes", "No"])
-distance_from_home = st.sidebar.number_input("Distance from Home (km)", min_value=1, max_value=50, step=1)
-monthly_income = st.sidebar.number_input("Monthly Income (₹)", min_value=10000, max_value=100000, step=5000)
+age = st.sidebar.slider("Age", min_value=18, max_value=60, step=1)
+job_satisfaction = st.sidebar.radio("Job Satisfaction Level (1 - Very Dissatisfied, 5 - Very Satisfied)", [1, 2, 3, 4, 5])
+years_at_company = st.sidebar.slider("Years at Company", min_value=0, max_value=40, step=1)
+overtime = st.sidebar.radio("Overtime", ["Yes", "No"])
+distance_from_home = st.sidebar.slider("Distance from Home (km)", min_value=1, max_value=50, step=1)
+monthly_income = st.sidebar.slider("Monthly Income (₹)", min_value=10000, max_value=100000, step=5000)
 
 if st.sidebar.button("🚀 Predict Attrition"):
     overtime_val = 1 if overtime == "Yes" else 0

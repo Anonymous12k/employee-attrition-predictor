@@ -4,7 +4,7 @@ import joblib
 import matplotlib.pyplot as plt
 import seaborn as sns
 import shap
-from mpl_toolkits.mplot3d import Axes3D
+import plotly.graph_objects as go
 
 # Load the trained model
 model = joblib.load("attrition_model.pkl")
@@ -75,14 +75,22 @@ st.write("---")
 # Load dataset for visualization
 data = pd.read_csv("WA_Fn-UseC_-HR-Employee-Attrition.csv")
 
-# 3D Pie Chart visualization
-st.subheader("📊 3D Pie Chart for Overall Attrition Distribution")
-attrition_counts = data['Attrition'].value_counts()
-fig = plt.figure(figsize=(8, 6))
-ax = fig.add_subplot(111, projection='3d')
-ax.pie(attrition_counts, labels=['Stay', 'Leave'], autopct='%1.1f%%', colors=['#00cc66', '#ff5050'])
-ax.set_title('3D Attrition Distribution (Note: 3D simulated with tilt)')
-st.pyplot(fig)
+# Interactive 3D-Style Pie Chart for Attrition Distribution
+st.subheader("📊 Interactive 3D-Style Pie Chart for Attrition Distribution")
+labels = ['Stay', 'Leave']
+values = data['Attrition'].value_counts().values
+
+fig_pie = go.Figure(data=[go.Pie(
+    labels=labels,
+    values=values,
+    hole=0.3,
+    pull=[0, 0.1],
+    marker=dict(colors=['#00cc66', '#ff5050']),
+    textinfo='label+percent',
+    rotation=45
+)])
+fig_pie.update_layout(title_text="Attrition Distribution (Interactive 3D Effect)")
+st.plotly_chart(fig_pie)
 
 st.sidebar.write("Developed by: L KISHORE | SIMATS Engineering")
 st.sidebar.markdown("""

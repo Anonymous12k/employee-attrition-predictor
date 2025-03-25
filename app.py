@@ -4,6 +4,7 @@ import joblib
 import matplotlib.pyplot as plt
 import seaborn as sns
 import shap
+from mpl_toolkits.mplot3d import Axes3D
 
 # Load the trained model
 model = joblib.load("attrition_model.pkl")
@@ -70,6 +71,18 @@ if st.sidebar.button("🚀 Predict Attrition"):
         st.warning("SHAP explanation not available for this model type.")
 
 st.write("---")
+
+# Load dataset for visualization
+data = pd.read_csv("WA_Fn-UseC_-HR-Employee-Attrition.csv")
+
+# 3D Pie Chart visualization
+st.subheader("📊 3D Pie Chart for Overall Attrition Distribution")
+attrition_counts = data['Attrition'].value_counts()
+fig = plt.figure(figsize=(8, 6))
+ax = fig.add_subplot(111, projection='3d')
+ax.pie(attrition_counts, labels=['Stay', 'Leave'], autopct='%1.1f%%', colors=['#00cc66', '#ff5050'])
+ax.set_title('3D Attrition Distribution (Note: 3D simulated with tilt)')
+st.pyplot(fig)
 
 st.sidebar.write("Developed by: L KISHORE | SIMATS Engineering")
 st.sidebar.markdown("""

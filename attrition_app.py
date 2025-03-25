@@ -31,7 +31,7 @@ age = st.sidebar.slider("Age", 18, 60, 30)
 overtime = st.sidebar.radio("OverTime", ["Yes", "No"])
 years_at_company = st.sidebar.slider("Years at Company", 0, 40, 5)
 monthly_income = st.sidebar.number_input("Monthly Income", 1000, 50000, 5000)
-job_satisfaction = st.sidebar.radio("Job Satisfaction (1-5)", [1, 2, 3, 4, 5], index=2)
+job_satisfaction = st.sidebar.slider("Job Satisfaction (1-5)", 1, 5, 3)
 distance_from_home = st.sidebar.slider("Distance from Home (km)", 1, 50, 10)
 
 if st.sidebar.button("🚀 Predict Attrition"):
@@ -58,11 +58,12 @@ if st.sidebar.button("🚀 Predict Attrition"):
     st.markdown("## 📊 Prediction Output")
 
     if prediction == 1:
-        st.error(f"⚠️ This employee is likely to leave. Probability: {probability:.2f}%")
+        st.error(f"⚠ This employee is likely to leave. Probability: {probability:.2f}%")
     else:
         st.success(f"✅ This employee is likely to stay. Probability of leaving: {probability:.2f}%")
 
-    st.info("**Key Factors influencing prediction:**")
+    # Visual insights on prediction
+    st.info("*Key Factors influencing prediction:*")
     st.write("- Age: Younger employees may have higher turnover.")
     st.write("- Job Satisfaction: Low satisfaction increases risk.")
     st.write("- OverTime: Frequent overtime can increase attrition.")

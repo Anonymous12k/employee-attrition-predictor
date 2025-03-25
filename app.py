@@ -25,11 +25,11 @@ add_banner()
 # Sidebar form inputs
 st.sidebar.header("🔎 Enter Employee Details:")
 age = st.sidebar.number_input("Age", min_value=18, max_value=60, step=1)
-job_satisfaction = st.sidebar.slider("Job Satisfaction (1-5)", min_value=1, max_value=5, step=1)
+job_satisfaction = st.sidebar.slider("Job Satisfaction (1-4)", min_value=1, max_value=4, step=1)
 years_at_company = st.sidebar.number_input("Years at Company", min_value=0, max_value=40, step=1)
 overtime = st.sidebar.selectbox("Overtime", ["Yes", "No"])
 distance_from_home = st.sidebar.number_input("Distance from Home (km)", min_value=1, max_value=50, step=1)
-monthly_income = st.sidebar.number_input("Monthly Income", min_value=10000, max_value=100000, step=5000)
+monthly_income = st.sidebar.number_input("Monthly Income (₹)", min_value=10000, max_value=100000, step=5000)
 
 if st.sidebar.button("🚀 Predict Attrition"):
     overtime_val = 1 if overtime == "Yes" else 0
@@ -53,18 +53,19 @@ if st.sidebar.button("🚀 Predict Attrition"):
     else:
         st.success(f"✅ The employee is likely to stay (Attrition Probability: {probability:.2f}%)")
 
-    st.info("**Key Influencing Factors:**")
-    st.write("- Age and experience in the company")
+    st.info("**Key Influencing Factors Used by the Algorithm:**")
+    st.write("- Age and years of experience at the company")
     st.write("- Job satisfaction level")
-    st.write("- Overtime frequency")
+    st.write("- Overtime frequency (converted into binary: 1 for yes, 0 for no)")
     st.write("- Distance from home and monthly income")
+    st.write("\nThe model (Logistic Regression or Random Forest) calculates the weighted influence of each feature based on learned coefficients or decision trees during training.")
 
     # Add SHAP explanation (if explainer available)
     try:
         explainer = shap.Explainer(model, input_data)
         shap_values = explainer(input_data)
         st.set_option('deprecation.showPyplotGlobalUse', False)
-        st.subheader("🔎 Model Explainability (SHAP)")
+        st.subheader("🔎 Model Explainability (SHAP Waterfall Plot)")
         shap.plots.waterfall(shap_values[0])
         st.pyplot(bbox_inches='tight')
     except:

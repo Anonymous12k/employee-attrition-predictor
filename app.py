@@ -25,11 +25,11 @@ add_banner()
 # Sidebar form inputs
 st.sidebar.header("🔎 Enter Employee Details:")
 age = st.sidebar.number_input("Age", min_value=18, max_value=60, step=1)
-job_satisfaction = st.sidebar.slider("Job Satisfaction (1-4)", min_value=1, max_value=4, step=1)
+job_satisfaction = st.sidebar.slider("Job Satisfaction (1-5)", min_value=1, max_value=5, step=1)
 years_at_company = st.sidebar.number_input("Years at Company", min_value=0, max_value=40, step=1)
 overtime = st.sidebar.selectbox("Overtime", ["Yes", "No"])
 distance_from_home = st.sidebar.number_input("Distance from Home (km)", min_value=1, max_value=50, step=1)
-monthly_income = st.sidebar.number_input("Monthly Income", min_value=10000, max_value=150000, step=5000)
+monthly_income = st.sidebar.number_input("Monthly Income", min_value=10000, max_value=100000, step=5000)
 
 if st.sidebar.button("🚀 Predict Attrition"):
     overtime_val = 1 if overtime == "Yes" else 0

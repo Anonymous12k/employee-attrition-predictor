@@ -31,7 +31,7 @@ age = st.sidebar.slider("Age", 18, 60, 30)
 overtime = st.sidebar.radio("OverTime", ["Yes", "No"])
 years_at_company = st.sidebar.slider("Years at Company", 0, 40, 5)
 monthly_income = st.sidebar.number_input("Monthly Income", 1000, 100000, 5000)
-job_satisfaction = st.sidebar.radio("Job Satisfaction (1-5)", [1, 2, 3, 4, 5])
+job_satisfaction = st.sidebar.radio("Job Satisfaction (1-4)", [1, 2, 3, 4])
 distance_from_home = st.sidebar.slider("Distance from Home (km)", 1, 50, 10)
 education_field = st.sidebar.selectbox("Education Field", data['EducationField'].unique())
 job_role = st.sidebar.selectbox("Job Role", data['JobRole'].unique())
@@ -105,12 +105,4 @@ ax3.set_xlabel("Education Field")
 st.pyplot(fig3)
 
 # Correlation heatmap using only numeric columns
-st.subheader("📊 Feature Correlation Heatmap")
-numeric_data = data.select_dtypes(include=['int64', 'float64'])
-fig4, ax4 = plt.subplots(figsize=(12, 8))
-sns.heatmap(numeric_data.corr(), annot=True, cmap="coolwarm", ax=ax4, fmt=".2f")
-ax4.set_title("Correlation Between Features")
-st.pyplot(fig4)
-
-st.sidebar.markdown("<hr>", unsafe_allow_html=True)
-st.sidebar.write("Developed by: L. Kishore | Saveetha School of Engineering")
+st.sub
